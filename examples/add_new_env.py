@@ -126,10 +126,18 @@ if __name__ == '__main__':
     ENV_REGISTRY["magym"] = RLlibMAGym
     # initialize env
     env = marl.make_env(environment_name="magym", map_name="Checkers", abs_path="../../examples/config/env_config/magym.yaml")
+    # # pick mappo algorithms
+    # mappo = marl.algos.mappo(hyperparam_source="test")
+    # # customize model
+    # model = marl.build_model(env, mappo, {"core_arch": "mlp", "encode_layer": "128-128"}, )
+    # # start learning
+    # mappo.fit(env, model, stop={'episode_reward_mean': 60, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1, #'episode_reward_mean': 2000
+    #           num_workers=14, share_policy='all', checkpoint_freq=300, num_to_keep=2) #num_workers=2
+
     # pick mappo algorithms
-    mappo = marl.algos.mappo(hyperparam_source="test")
+    ppo = marl.algos.ppo(hyperparam_source="test")
     # customize model
-    model = marl.build_model(env, mappo, {"core_arch": "mlp", "encode_layer": "128-128"})
+    model = marl.build_model(env, ppo, {"core_arch": "mlp", "encode_layer": "128-128"})
     # start learning
-    mappo.fit(env, model, stop={'episode_reward_mean': 2000, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1,
-              num_workers=2, share_policy='all', checkpoint_freq=50)
+    ppo.fit(env, model, stop={'episode_reward_mean': 60, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1, #'episode_reward_mean': 2000
+              num_workers=14, share_policy='all', checkpoint_freq=300, num_to_keep=2) #num_workers=2
