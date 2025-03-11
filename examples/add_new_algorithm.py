@@ -132,5 +132,5 @@ if __name__ == '__main__':
     model = marl.build_model(env, ipg, {"core_arch": "mlp", "encode_layer": "128-256"})
 
     # start learning + extra experiment settings if needed. remember to check ray.yaml before use
-    ipg.fit(env, model, stop={'episode_reward_mean': 2000, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1,
-             num_workers=0, share_policy='all', checkpoint_freq=10)
+    ipg.fit(env, model, stop={'episode_reward_mean': 0, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1,
+             num_workers=14, share_policy='all',  checkpoint_freq=100, num_to_keep=2)

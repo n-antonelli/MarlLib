@@ -31,7 +31,7 @@ algo = "PPO"
 
 ##### heterogéneo #####
 
-with open('C:\\Users\\Usuario\\Documents\\Programas\\MARLlib\\examples\\exp_results\\mappo_mlp_Checkers\\MAPPOTrainer_magym_Checkers_4be98_00000_0_2025-03-10_11-45-23\\result.json',
+with open('C:\\Users\\Usuario\\Documents\\Programas\\MARLlib\\examples\\exp_results\\ippo_mlp_Checkers\IPPOTrainer_magym_Checkers_6004d_00000_0_2025-03-11_10-11-42\\result.json',
           'r') as file:
     data = []
     for episode in file:
@@ -48,7 +48,8 @@ reward_episode_ag0 = []
 reward_episode_ag1 = []
 reward_episode_ag2 = []
 
-#####"info":"learner":"default_policy":"learner_stats":"total_loss"
+##### mappo-->['info']['learner']['default_policy']['learner_stats']['total_loss']
+#### ipg-->['info']['learner']['shared_policy']['learner_stats']['policy_loss']
 #Sacar tipos de agentes (nombres)
 agents = []
 # for agent in enumerate(data[0]['policy_reward_mean']):

@@ -40,13 +40,14 @@ from marllib import marl
 from marllib.envs.base_env import ENV_REGISTRY
 import time
 
+
 # register all scenario with env class
 REGISTRY = {}
 REGISTRY["Checkers"] = Checkers
 REGISTRY["Switch2"] = Switch
 
-# provide detailed information of each scenario
-# mostly for policy sharing
+# provide detailed information of each scenario, mostly for policy sharing
+# es para map_name, original se encuentra en checkpoint-params.json
 policy_mapping_dict = {
     "Checkers": {
         "description": "two team cooperate",
@@ -126,18 +127,28 @@ if __name__ == '__main__':
     ENV_REGISTRY["magym"] = RLlibMAGym
     # initialize env
     env = marl.make_env(environment_name="magym", map_name="Checkers", abs_path="../../examples/config/env_config/magym.yaml")
+    ######## algoritmos ########
+    # pick mappo algorithms
+    mappo = marl.algos.mappo(hyperparam_source="test")
+    # customize model
+    model = marl.build_model(env, mappo, {"core_arch": "mlp", "encode_layer": "128-128"}, )
+    # start learning
+    mappo.fit(env, model, stop={'episode_reward_mean': 60, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1, #'episode_reward_mean': 2000
+              num_workers=14, share_policy='all', checkpoint_freq=300, num_to_keep=2) #num_workers=2
+
     # # pick mappo algorithms
-    # mappo = marl.algos.mappo(hyperparam_source="test")
+    # ippo = marl.algos.ippo(hyperparam_source="test")
     # # customize model
-    # model = marl.build_model(env, mappo, {"core_arch": "mlp", "encode_layer": "128-128"}, )
+    # model = marl.build_model(env, ippo, {"core_arch": "mlp", "encode_layer": "128-128"})
     # # start learning
-    # mappo.fit(env, model, stop={'episode_reward_mean': 60, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1, #'episode_reward_mean': 2000
+    # ippo.fit(env, model, stop={'episode_reward_mean': 60, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1, #'episode_reward_mean': 2000
     #           num_workers=14, share_policy='all', checkpoint_freq=300, num_to_keep=2) #num_workers=2
 
-    # pick mappo algorithms
-    ppo = marl.algos.ppo(hyperparam_source="test")
-    # customize model
-    model = marl.build_model(env, ppo, {"core_arch": "mlp", "encode_layer": "128-128"})
-    # start learning
-    ppo.fit(env, model, stop={'episode_reward_mean': 60, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1, #'episode_reward_mean': 2000
-              num_workers=14, share_policy='all', checkpoint_freq=300, num_to_keep=2) #num_workers=2
+    # # pick mappo algorithms
+    # vdppo = marl.algos.vdppo(hyperparam_source="test")
+    # # customize model
+    # model = marl.build_model(env, vdppo, {"core_arch": "mlp", "encode_layer": "128-128"})
+    # # start learning
+    # vdppo.fit(env, model, stop={'episode_reward_mean': 60, 'timesteps_total': 10000000}, local_mode=True, num_gpus=1,
+    #          # 'episode_reward_mean': 2000
+    #          num_workers=0,num_envs_per_worker=1, share_policy='all', checkpoint_freq=300, num_to_keep=2)  # num_workers=2

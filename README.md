@@ -424,7 +424,10 @@ Works that are based on or closely collaborate with MARLlib <[link](https://gith
 
 
 25.03.10
-Andan algoritmos de centralized critic pero no los de IL y VD ---> 
+En add_new_env andan algoritmos de centralized critic pero no los de IL y VD ---> IL funciona, VD no porque no tiene _local_ip
+
+25.03.11
+El mappo en "trial" self tiene node_ip pero en vdppo no --> cómo se diferencian?
 
 
 
