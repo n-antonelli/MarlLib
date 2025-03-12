@@ -63,10 +63,10 @@ class RLlibVoltageControl(MultiAgentEnv):
             env_config["action_scale"] = 0.8
 
         # define control mode and voltage barrier function
-        env_config["mode"] = 'distributed'
+        env_config["mode"] = 'distributed' # 'distributed' un agente para cada equipo/ 'decentralised' para un agente que controle cada zona
         env_config["voltage_barrier_type"] = 'l1'
-        env_config["data_path"] = os.path.join(global_data_source_path, "marllib/patch/dpn/var_voltage_control/data",
-                                               net_topology)
+        env_config["data_path"] = os.path.join(global_data_source_path, "marllib\\patch\\dpn\\var_voltage_control\\data", #"marllib/patch/dpn/var_voltage_control/data"
+                                               net_topology) # TODO: dirección 'global_data_source_path' incluye examples, cuando no devería porque marlib no estaba originalmente dentro de examples.
         self.env = VoltageControl(env_config)
 
         self.action_space = Box(self.env.action_space.low, self.env.action_space.high, shape=(1,))
